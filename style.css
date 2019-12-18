@@ -30,6 +30,12 @@ body {
     margin: 0;
 }
 
+#level-select {
+    flex: .25;
+    background-color: aquamarine;
+}
+
+
 .sudoku-ctrl-btns {
     flex: 1;
     border: none;
@@ -67,8 +73,12 @@ body {
     border: 1px solid lightgray;
 }
 
+.interactive {
+    background-color: #F4FEFF;
+}
+
 .interactive:hover {
-    background-color: #944654;
+    background-color: #6F8AB7;
 }
 
 .active {

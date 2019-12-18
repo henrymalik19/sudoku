@@ -117,11 +117,11 @@
     //     return shuffledBoard;
     // }
 
-    function removeNums(board) {
+    function removeNums(board, level) {
         let boardString = (Array.from(board.join().replace(/,/g, '')));
-        let easy = board.length * (Math.sqrt(board.length));
+        let removeSqrs = board.length * (Math.sqrt(board.length) + level);
 
-        for(n = 0; n < easy; n++) {
+        for(n = 0; n < removeSqrs; n++) {
             let i = getRandomNum(boardString.length-1);
 
             while(boardString[i] === ''){
@@ -148,11 +148,11 @@
         solveBoard: '',
     };
 
-    Sudoku.getBoard = function(dim) {
+    Sudoku.getBoard = function(dim, level) {
 
         this.solution = generateBoard(dim);
         // board = shuffleboard(board, dim);
-        return removeNums(this.solution);
+        return removeNums(this.solution, level);
         
     };
 })(this);

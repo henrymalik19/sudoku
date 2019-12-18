@@ -78,14 +78,14 @@
     fillBtn.addEventListener('click', e => { // add event listener to fill the board
         boardDiv.innerHTML = '';
         chooseNumDiv.innerHTML = '';
-        boardToDOM(Sudoku.getBoard(boardSize), boardDiv); // we get a board and then add board to dom
+        boardToDOM(Sudoku.getBoard(boardSize, 3), boardDiv); // we get a board and then add board to dom
     });
 
     solveBtn.addEventListener('click', e => { // add event listener to fill the board
         console.log('Solve Board!');
     });
 
-    boardToDOM(Sudoku.getBoard(boardSize), boardDiv); // fill board on start
+    boardToDOM(Sudoku.getBoard(boardSize, 3), boardDiv); // fill board on start
 })();
 
 
