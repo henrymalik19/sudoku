@@ -166,8 +166,14 @@
             row.forEach(el => {
                 let elDiv = document.createElement('div');
                 elDiv.innerText = el;
-                elDiv.className = 'board-item';
-                elDiv.addEventListener('click', this.handleClick);
+
+                elDiv.classList.add('board-item');
+
+                if(el === '') {    
+                    elDiv.classList.add('interactive');
+                    elDiv.addEventListener('click', this.handleClick);
+                };
+                
                 rowDiv.appendChild(elDiv);
             });
             rootEl.appendChild(rowDiv);
