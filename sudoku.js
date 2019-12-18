@@ -146,8 +146,6 @@
         solution: '',
         getBoard: '',
         solveBoard: '',
-        boardToDOM: '',
-        handleClick: '',
     };
 
     Sudoku.getBoard = function(dim) {
@@ -157,31 +155,4 @@
         return removeNums(this.solution);
         
     };
-
-    Sudoku.boardToDOM = function(board, rootEl) {
-        board.forEach(row => {
-            rowDiv = document.createElement('div');
-            rowDiv.className = 'board-row';
-    
-            row.forEach(el => {
-                let elDiv = document.createElement('div');
-                elDiv.innerText = el;
-
-                elDiv.classList.add('board-item');
-
-                if(el === '') {    
-                    elDiv.classList.add('interactive');
-                    elDiv.addEventListener('click', this.handleClick);
-                };
-                
-                rowDiv.appendChild(elDiv);
-            });
-            rootEl.appendChild(rowDiv);
-        });  
-    }
-
-    Sudoku.handleClick = function(e) {
-        console.log("The 'This':", this);
-        console.log("The 'Event': ", e);
-    }
 })(this);

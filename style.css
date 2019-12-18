@@ -4,69 +4,67 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
-
     height: 100vh;
     width: 100vw;
-}
-
-#page-header {
-    text-align: center;
     margin: 0;
-    height: 10%;
+    padding: 0;
 }
 
-.container {
+#sudoku-container {
     display: flex;
-    margin: auto;
-    height: 90%;
+    height: 100%;
     width: 100%;
 }
 
-
-.controls {
+#sudoku-controls {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    width: 10%;
+    height: 90%;
+    margin: auto 0;
 }
 
-.ctrl-btns {
+#sudoku-title {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+}
+
+.sudoku-ctrl-btns {
+    flex: 1;
     border: none;
 }
 
-#game-area {
+#sudoku-board {
+    flex: 4;
     display: flex;
     flex-direction: column; /* So that the rows stack */
-
-    margin: auto 0;
     height: 90%;
-    width: 85%;
+    margin: auto 0;
 }
 
-.board-row {
+.sudoku-board-row {
     flex: 1; /* so each row takes up 1 column */
     display: flex;
 }
 
-.board-row:nth-child(3) .board-item,
-.board-row:nth-child(6) .board-item {
+.sudoku-board-row:nth-child(3) .sudoku-board-item,
+.sudoku-board-row:nth-child(6) .sudoku-board-item {
     border-bottom: 10px solid #A0ECD0;
 }
 
-.board-row .board-item:nth-child(3),
-.board-row .board-item:nth-child(6) {
+.sudoku-board-row .sudoku-board-item:nth-child(3),
+.sudoku-board-row .sudoku-board-item:nth-child(6) {
     border-right: 10px solid #A0ECD0;
 }
 
-.interactive,
-.board-item {
+.sudoku-board-item {
     flex: 1; /* so each number takes up even space columns */
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid lightgray;
     font-size: 25px;
+    border: 1px solid lightgray;
 }
 
 .interactive:hover {
@@ -77,12 +75,11 @@ body {
     background-color: lightgray;
 }
 
-#choose-num {
-    display: none;
+#sudoku-choose-nums {
+    flex: .25;
     flex-direction: column;
-    margin: auto 0;
     height: 90%;
-    width: 5%;
+    margin: auto 0;
 }
 
 .num-avail {

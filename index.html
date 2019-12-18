@@ -8,15 +8,15 @@
     <title>Play Sudoku!</title>
 </head>
 <body>
-    <h1 id="page-header">Sudoku!</h1>
-        <div class="container">
-            <div class="controls">
-                <input type="button" class="ctrl-btns" id="fill" value="New Board">
-                <input type="button" class="ctrl-btns" id="solve" value="Solve">
-            </div>
-            <div id="game-area"></div>
-            <div id="choose-num"></div>
+    <div id="sudoku-container">
+        <div id="sudoku-controls">
+            <h1 id="sudoku-title">Sudoku!</h1>
+            <input type="button" class="sudoku-ctrl-btns" id="sudoku-fill" value="New Board">
+            <input type="button" class="sudoku-ctrl-btns" id="sudoku-solve" value="Solve">
         </div>
+        <div id="sudoku-board"></div>
+        <div id="sudoku-choose-nums"></div>
+    </div>
     <script src="sudoku.js"></script>
     <script src="index.js"></script>
 </body>
