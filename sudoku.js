@@ -1,6 +1,3 @@
-// let sudoku = document.getElementById('sudoku');
-// let row = document.createElement('div');
-
 (function(global) {
     
     /* HELPER FUNCTIONS ####################################
@@ -15,10 +12,6 @@
     function isNumInRow(n, row) {
         return (row.findIndex(val => val === n) !== -1);
     };
-
-    /* HELPER FUNCTIONS ####################################
-    ########################################################
-    #######################################################*/
 
     /* BOARD FUNCTIONS #####################################
     ########################################################
@@ -84,68 +77,105 @@
 
         return board;
     }
-    function shuffleboard(board, dim) {
-        let shuffledBoard = [];
+    // function shuffleboard(board, dim) {
+    //     let shuffledBoard = [];
 
-        // Shuffle from front
-        for(i = 0; i < 100; i++) {
+    //     // Shuffle from front
+    //     for(i = 0; i < 100; i++) {
 
-            let toColF = ((getRandomNum(dim-1) * dim)); // Get a Number to Move First Column to (between 1 & dim (not inclusive))
-            let toColB = ((getRandomNum(dim-1) * dim)); // Get a Number to Move First Column to (between 1 & dim (not inclusive))
+    //         let toColF = ((getRandomNum(dim-1) * dim)); // Get a Number to Move First Column to (between 1 & dim (not inclusive))
+    //         let toColB = ((getRandomNum(dim-1) * dim)); // Get a Number to Move First Column to (between 1 & dim (not inclusive))
 
-            for(r = 0; r < board.length; r++) {
+    //         for(r = 0; r < board.length; r++) {
     
-                let row = Array.from(board[r]);
-                let valF = row.shift(); // Get first element
-                row.splice(toColF, 0, valF); // Move first element in rach row to a new column
-                let valB = row.pop(); // Get last element
-                row.splice(toColB+1, 0, valB); // Move last element in rach row to a new column
+    //             let row = Array.from(board[r]);
+    //             let valF = row.shift(); // Get first element
+    //             row.splice(toColF, 0, valF); // Move first element in rach row to a new column
+    //             let valB = row.pop(); // Get last element
+    //             row.splice(toColB+1, 0, valB); // Move last element in rach row to a new column
 
-                shuffledBoard.push(row);
+    //             shuffledBoard.push(row);
     
-                if(shuffledBoard.length > (dim*dim)){
-                    shuffledBoard.shift();
-                };
+    //             if(shuffledBoard.length > (dim*dim)){
+    //                 shuffledBoard.shift();
+    //             };
         
+    //         };
+
+    //     };
+
+    //     // // ROTATE BOARD
+    //     // let shuffledBoardB = [];
+    //     // for(r = 0; r < shuffledBoard.length; r++){
+    //     //     let row = [];
+    //     //     for(i = shuffledBoard[r].length -1; i > 0; i--){
+    //     //         row.push(shuffledBoard[r][i]);
+    //     //     };
+    //     //     shuffledBoardB.unshift(row);
+    //     // };
+
+    //     return shuffledBoard;
+    // }
+
+    function removeNums(board) {
+        let boardString = (Array.from(board.join().replace(/,/g, '')));
+        let easy = board.length * (Math.sqrt(board.length));
+
+        for(n = 0; n < easy; n++) {
+            let i = getRandomNum(boardString.length-1);
+
+            while(boardString[i] === ''){
+                i = getRandomNum(boardString.length-1);
             };
 
+            boardString[i] = '';
         };
 
-        // // ROTATE BOARD
-        // let shuffledBoardB = [];
-        // for(r = 0; r < shuffledBoard.length; r++){
-        //     let row = [];
-        //     for(i = shuffledBoard[r].length -1; i > 0; i--){
-        //         row.push(shuffledBoard[r][i]);
-        //     };
-        //     shuffledBoardB.unshift(row);
-        // };
+        let newBoard = [];
+        for(i = 0; i < board.length; i++){
+            let row = boardString.splice(0, 9);
+            newBoard.push(row);
+        };
+        return newBoard;
+    };
 
-        return shuffledBoard;
-    }
-
-    /* BOARD FUNCTIONS #####################################
-    ########################################################
-    #######################################################*/
-
-
-
-    /* DECLARE SUDOKY OBJECT ###############################
+    /* DECLARE SUDOKU OBJECT ###############################
     ########################################################
     #######################################################*/
     let Sudoku = global.Sudoku = {
-        board: [],
-        fillBoard: '',
+        solution: '',
+        getBoard: '',
         solveBoard: '',
+        boardToDOM: '',
+        handleClick: '',
     };
 
+    Sudoku.getBoard = function(dim) {
 
-    Sudoku.fillBoard = function(dim) {
-
-        let board = generateBoard(dim);
-        let shuffledBoard = shuffleboard(board, dim);
-        // board = removeNums(board);
-        console.log(board);
-        this.board = shuffledBoard;
+        this.solution = generateBoard(dim);
+        // board = shuffleboard(board, dim);
+        return removeNums(this.solution);
+        
     };
+
+    Sudoku.boardToDOM = function(board, rootEl) {
+        board.forEach(row => {
+            rowDiv = document.createElement('div');
+            rowDiv.className = 'board-row';
+    
+            row.forEach(el => {
+                let elDiv = document.createElement('div');
+                elDiv.innerText = el;
+                elDiv.className = 'board-item';
+                elDiv.addEventListener('click', this.handleClick);
+                rowDiv.appendChild(elDiv);
+            });
+            rootEl.appendChild(rowDiv);
+        });  
+    }
+
+    Sudoku.handleClick = function(e) {
+        console.log("The 'This':", this);
+        console.log("The 'Event': ", e);
+    }
 })(this);

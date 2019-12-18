@@ -8,7 +8,15 @@
     <title>Play Sudoku!</title>
 </head>
 <body>
-    <div id="game-area"></div>
+    <h1 id="page-header">Sudoku!</h1>
+        <div class="container">
+            <div class="controls">
+                <input type="button" class="ctrl-btns" id="fill" value="New Board">
+                <input type="button" class="ctrl-btns" id="solve" value="Solve">
+            </div>
+            <div id="game-area"></div>
+            <div id="choose-num"></div>
+        </div>
     <script src="sudoku.js"></script>
     <script src="index.js"></script>
 </body>
