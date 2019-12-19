@@ -2,11 +2,6 @@
     
     const Sudoku = window.Sudoku; // local variable points to Sudoku Object
     const boardSize = 3; // Board size x Board size
-
-    const fillBtn = document.getElementById('sudoku-fill'); // Grab Button to Fill Board
-    const solveBtn = document.getElementById('sudoku-solve'); // Grab Button to Solve Board
-    const boardDiv = document.getElementById('sudoku-board'); // Area will game is injected
-    let chooseNumDiv = document.getElementById('sudoku-choose-nums'); // Area for number available in selected square
     let boardItem = {
         previous: '',
         current: ''
@@ -15,6 +10,12 @@
     previous: '',
     current: ''
     };
+    
+    const fillBtn = document.getElementById('sudoku-fill'); // Grab Button to Fill Board
+    const solveBtn = document.getElementById('sudoku-solve'); // Grab Button to Solve Board
+    const boardDiv = document.getElementById('sudoku-board'); // Area will game is injected
+    let chooseNumDiv = document.getElementById('sudoku-choose-nums'); // Area for number available in selected square
+
 
     function handleNumAvailClick(e) {
         numSelection.previous = numSelection.current; // set previous current clicked number selection to previous so active class can be toggled
@@ -33,22 +34,41 @@
         boardItem.current = e.target; // set current clicked square
         boardItem.current.classList.add('active'); // give current clicked square active class
 
-        chooseNumDiv.innerText = ''; // Clear div so no data is left over when we add more
-        let range = Array.from(Array(boardSize*boardSize + 1).keys()); // array from 0 to length of board (board * board)
-        range.shift(); // we do not need zero so remove
+        if(boardItem.current.innerText){
+            console.log('not empty');
+            chooseNumDiv.childNodes.forEach(numDiv => {
+                if(boardItem.current.innerText === numDiv.innerText) {
+                    numSelection.previous = numSelection.current;
+                    numSelection.previous.classList.remove('active');
+                    numSelection.current = numDiv;
+                    numSelection.current.classList.add('active');
+                };
+            });
+        } else {
+            if(numSelection.current === '') {
+                console.log('first empty');
+            } else {
+                console.log('empty');
+                numSelection.previous = numSelection.current;
+                numSelection.previous.classList.remove('active');
+            };
+            console.log(numSelection);
+        };        
 
-        range.forEach(num => {
-            let numDiv = document.createElement('div');
-            numDiv.className = 'num-avail';
-            // if(e.target.innerText === num.toString()) {
-            //     numDiv.classList.add('active');
-            //     numSelection.current = numDiv;
-            // };
-            numDiv.innerText = num;
-            numDiv.addEventListener('click', handleNumAvailClick);
-            chooseNumDiv.appendChild(numDiv);
-        });
-        chooseNumDiv.style.display = 'flex';
+        if(!chooseNumDiv.innerHTML) {
+            chooseNumDiv.innerText = ''; // Clear div so no data is left over when we add more
+            let range = Array.from(Array(boardSize*boardSize + 1).keys()); // array from 0 to length of board (board * board)
+            range.shift(); // we do not need zero so remove
+
+            range.forEach(num => {
+                let numDiv = document.createElement('div');
+                numDiv.className = 'num-avail';
+                numDiv.innerText = num;
+                numDiv.addEventListener('click', handleNumAvailClick);
+                chooseNumDiv.appendChild(numDiv);
+            });
+            chooseNumDiv.style.display = 'flex';
+        };
     };
 
     function boardToDOM(board, rootEl) {
