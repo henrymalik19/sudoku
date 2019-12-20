@@ -17,7 +17,7 @@
             e.target.classList.remove('active'); // num selection active is removed
             numSelection = ''; // number selection is set to empty
         } else {
-            if(document.querySelector('.num-avail.active')) document.querySelector('.num-avail.active').classList.toggle('active');
+            if(numSelection) numSelection.classList.toggle('active');
             numSelection = e.target;
             numSelection.classList.toggle('active');
             boardItem.innerText = numSelection.innerText;
@@ -25,10 +25,11 @@
     };
 
     function handleBoardClick(e) { // handle clicking on square
-        if(document.querySelector('.interactive.active')) document.querySelector('.interactive.active').classList.toggle('active');
-        if(document.querySelector('.num-avail.active')) document.querySelector('.num-avail.active').classList.toggle('active');
+        if(boardItem) boardItem.classList.toggle('active');
+        if(numSelection) numSelection.classList.toggle('active');
         boardItem = e.target;
         boardItem.classList.toggle('active');
+        numSelection = '';
 
         if(boardItem.innerText) {
             document.querySelectorAll('.num-avail').forEach(el =>{
