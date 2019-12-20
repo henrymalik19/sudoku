@@ -2,58 +2,42 @@
     
     const Sudoku = window.Sudoku; // local variable points to Sudoku Object
     const boardSize = 3; // Board size x Board size
-    let boardItem = {
-        previous: '',
-        current: ''
-    };
-    let numSelection = {
-    previous: '',
-    current: ''
-    };
+    let boardItem = '';
+    let numSelection = '';
     
     const fillBtn = document.getElementById('sudoku-fill'); // Grab Button to Fill Board
     const solveBtn = document.getElementById('sudoku-solve'); // Grab Button to Solve Board
     const boardDiv = document.getElementById('sudoku-board'); // Area will game is injected
-    let chooseNumDiv = document.getElementById('sudoku-choose-nums'); // Area for number available in selected square
+    const chooseNumDiv = document.getElementById('sudoku-choose-nums'); // Area for number available in selected square
 
 
     function handleNumAvailClick(e) {
-        numSelection.previous = numSelection.current; // set previous current clicked number selection to previous so active class can be toggled
-        if(numSelection.previous) numSelection.previous.classList.remove('active'); // Remove Previous Active Num Selection Active Class
-
-        numSelection.current = e.target; // make current clicked number selection
-        numSelection.current.classList.add('active'); // give current item active class
-        boardItem.current.innerText = numSelection.current.innerText; // make board square text equal to current item value
-        console.log(numSelection);
+        if(e.target.innerText === boardItem.innerText) { // if they are the same
+            boardItem.innerText = ''; // board item is cleared 'deselected'
+            e.target.classList.remove('active'); // num selection active is removed
+            numSelection = ''; // number selection is set to empty
+        } else {
+            if(document.querySelector('.num-avail.active')) document.querySelector('.num-avail.active').classList.toggle('active');
+            numSelection = e.target;
+            numSelection.classList.toggle('active');
+            boardItem.innerText = numSelection.innerText;
+        };
     };
 
     function handleBoardClick(e) { // handle clicking on square
-        boardItem.previous = boardItem.current; // set previous current clicked square to previous so active class can be toggled
+        if(document.querySelector('.interactive.active')) document.querySelector('.interactive.active').classList.toggle('active');
+        if(document.querySelector('.num-avail.active')) document.querySelector('.num-avail.active').classList.toggle('active');
+        boardItem = e.target;
+        boardItem.classList.toggle('active');
 
-        if(boardItem.previous) boardItem.previous.classList.remove('active'); // toggle previously clicked squares active class
-        boardItem.current = e.target; // set current clicked square
-        boardItem.current.classList.add('active'); // give current clicked square active class
-
-        if(boardItem.current.innerText){
-            console.log('not empty');
-            chooseNumDiv.childNodes.forEach(numDiv => {
-                if(boardItem.current.innerText === numDiv.innerText) {
-                    numSelection.previous = numSelection.current;
-                    numSelection.previous.classList.remove('active');
-                    numSelection.current = numDiv;
-                    numSelection.current.classList.add('active');
+        if(boardItem.innerText) {
+            document.querySelectorAll('.num-avail').forEach(el =>{
+                if(el.innerText === boardItem.innerText) {
+                    numSelection = el;
+                    numSelection.classList.toggle('active');
                 };
             });
-        } else {
-            if(numSelection.current === '') {
-                console.log('first empty');
-            } else {
-                console.log('empty');
-                numSelection.previous = numSelection.current;
-                numSelection.previous.classList.remove('active');
-            };
-            console.log(numSelection);
-        };        
+        };
 
         if(!chooseNumDiv.innerHTML) {
             chooseNumDiv.innerText = ''; // Clear div so no data is left over when we add more
