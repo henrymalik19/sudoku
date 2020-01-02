@@ -84,10 +84,16 @@
         boardDiv.innerHTML = '';
         chooseNumDiv.innerHTML = '';
         boardToDOM(Sudoku.getBoard(boardSize, 3), boardDiv); // we get a board and then add board to dom
+        document.getElementById('sudoku-solve').disabled = false;
     });
 
     solveBtn.addEventListener('click', e => { // add event listener to fill the board
-        console.log('Solve Board!');
+        e.target.disabled = true;
+        Sudoku.solution.forEach((row, ri) => {
+            row.forEach((el, ei) => {
+                boardDiv.childNodes[ri].childNodes[ei].innerText = el;
+            });
+        });
     });
 
     boardToDOM(Sudoku.getBoard(boardSize, 3), boardDiv); // fill board on start
