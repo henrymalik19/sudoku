@@ -91,7 +91,13 @@
         e.target.disabled = true;
         Sudoku.solution.forEach((row, ri) => {
             row.forEach((el, ei) => {
-                boardDiv.childNodes[ri].childNodes[ei].innerText = el;
+                if(boardDiv.childNodes[ri].childNodes[ei].classList.contains('interactive')) {
+                    boardDiv.childNodes[ri].childNodes[ei].classList.add('solved');
+                    boardDiv.childNodes[ri].childNodes[ei].classList.remove('interactive');
+                    boardDiv.childNodes[ri].childNodes[ei].innerText = el;
+                    boardDiv.childNodes[ri].childNodes[ei].removeEventListener('click', handleBoardClick);
+                    chooseNumDiv.innerHTML = '';
+                } 
             });
         });
     });
