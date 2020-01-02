@@ -10,6 +10,56 @@
     const boardDiv = document.getElementById('sudoku-board'); // Area will game is injected
     const chooseNumDiv = document.getElementById('sudoku-choose-nums'); // Area for number available in selected square
 
+    function validateSelection(boardItem) {
+
+        function inRow() {
+            let dup = false;
+            boardItem.parentNode.childNodes.forEach(child => {
+                if(child !== boardItem) {
+                    if(child.innerText === boardItem.innerText) {
+                        dup = true;
+                        child.classList.add('duplicateNum');
+                        boardItem.classList.add('duplicateNum');
+    
+                        setTimeout(()=> {
+                            child.classList.remove('duplicateNum');
+                            boardItem.classList.remove('duplicateNum');
+                            boardItem.innerText = '';
+                            numSelection.classList.remove('active');
+                            numSelection = '';
+                        },500);
+                    };
+                };
+            });
+            return dup;
+        };
+        function inCol() {
+            let dup = false;
+            let index = Array.from(boardItem.parentNode.childNodes).indexOf(boardItem);
+
+            boardDiv.childNodes.forEach(row => {
+                if(row.childNodes[index] !== boardItem) {
+                    if(row.childNodes[index].innerText === boardItem.innerText) {
+                        dup = true;
+                        row.childNodes[index].classList.add('duplicateNum');
+                        boardItem.classList.add('duplicateNum');
+
+                        setTimeout(()=> {
+                            row.childNodes[index].classList.remove('duplicateNum');
+                            boardItem.classList.remove('duplicateNum');
+                            boardItem.innerText = '';
+                            numSelection.classList.remove('active');
+                            numSelection = '';
+                        },500);
+                    };
+                };
+            });
+        }
+
+        if(inRow()) return;
+        if(inCol()) return;
+    }
+
 
     function handleNumAvailClick(e) {
         if(e.target.innerText === boardItem.innerText) { // if they are the same
@@ -21,6 +71,7 @@
             numSelection = e.target;
             numSelection.classList.toggle('active');
             boardItem.innerText = numSelection.innerText;
+            validateSelection(boardItem);
         };
     };
 
